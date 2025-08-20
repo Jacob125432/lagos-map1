@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>Lagos (Portugalia) — interaktywna mapa atrakcji dla ekipy 8 osób</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { height: 100vh; width: 100%; }
+    .legend {
+      position: absolute; top: 10px; left: 10px; z-index: 1000;
+      background: #fff; border: 1px solid #ccc; border-radius: 8px;
+      padding: 8px 10px; box-shadow: 0 2px 8px rgba(0,0,0,.1);
+      font: 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .legend label { display: block; margin: 4px 0; cursor: pointer; }
+    .popup h3 { margin: 0 0 6px; font-size: 16px; }
+    .popup p { margin: 4px 0; }
+    .popup a { text-decoration: none; }
+    .tag { display:inline-block; font-size:12px; padding:2px 6px; border-radius:999px; background:#f3f4f6; margin-left:6px; }
+    .credit { position:absolute; bottom:10px; left:10px; z-index:1000; background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:6px 8px; font-size:12px; color:#374151;}
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="legend" id="legend">
+    <strong>Filtry</strong>
+    <label><input type="checkbox" data-layer="beach" checked> Plaże</label>
+    <label><input type="checkbox" data-layer="adventure" checked> Woda & adrenalina</label>
+    <label><input type="checkbox" data-layer="culture" checked> Zwiedzanie & historia</label>
+    <label><input type="checkbox" data-layer="nightlife" checked> Nocne życie</label>
+  </div>
+  <div class="credit">Źródło mapy: © OpenStreetMap, Leaflet</div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script>
+    // Inicjalizacja mapy
+    const map = L.map('map').setView([37.1028, -8.6727], 14);
+
+    // Warstwa kafelków
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Grupy warstw
+    const groups = {
+      beach: L.layerGroup().addTo(map),
+      adventure: L.layerGroup().addTo(map),
+      culture: L.layerGroup().addTo(map),
+      nightlife: L.layerGroup().addTo(map),
+    };
+
+    // Dane punktów (nazwa, opis, linki, "dlaczego", kategoria i współrzędne)
+    const spots = [
+      {
+        name: "Ponta da Piedade (klifowy labirynt + latarnia)",
+        lat: 37.08062, lng: -8.66942, cat: "adventure",
+        desc: "Najsłynniejsze klify Algarve: łuki skalne, groty, punkty widokowe i drewniane kładki.",
+        links: [
+          {label:"Info (przewodnik)", url:"https://www.lagosportugalguide.com/lagos-algarve/ponta-da-piedade-lagos.html"},
+          {label:"Mapa", url:"https://mapcarta.com/W55432710"}
+        ],
+        why: "Mocny efekt WOW + trasy piesze i świetny punkt startowy do kajaków/łodzi."
+      },
+      {
+        name: "Praia do Camilo",
+        lat: 37.08733, lng: -8.66843, cat: "beach",
+        desc: "Ikoniczna plaża ze stromymi schodami, turkusową wodą i fotogenicznymi formacjami.",
+        links: [
+          {label:"Opis (blog)", url:"https://www.zigzagonearth.com/praia-camilo-beach-lagos-portugal/"},
+          {label:"Mapa/koordy", url:"https://mapcarta.com/33030320"}
+        ],
+        why: "Świetne zdjęcia, zejście „na nogach pali”, klimat przygody w miejskim zasięgu."
+      },
+      {
+        name: "Praia de Dona Ana",
+        lat: 37.091427, lng: -8.669362, cat: "beach",
+        desc: "Duża, osłonięta plaża między Pinhão i Camilo — złote klify i łatwy dostęp.",
+        links: [
+          {label:"Info + GPS", url:"https://www.lagosportugalguide.com/lagos-algarve/Praia-Dona-Ana-lagos.html"}
+        ],
+        why: "Bezpieczna baza wypadowa dla większej grupy; w sezonie dostępne wypożyczenia."
+      },
+      {
+        name: "Praia da Batata (start kajaków/SUP)",
+        lat: 37.0977806, lng: -8.6684444, cat: "adventure",
+        desc: "Plaża u ujścia rzeki Bensafrim — częsty punkt startu wycieczek kajakowych do grot.",
+        links: [
+          {label:"Info (turystyczne)", url:"https://www.lagosportugalguide.com/lagos-algarve/Praia-da-Batata-lagos.html"},
+          {label:"Oficjalnie (koory)", url:"https://visitalgarve.pt/en/equipamento/8725/praia-da-batata"}
+        ],
+        why: "Idealna, by całą ekipą wsiąść w kajaki/SUP i „przepłynąć” klify pod Piedade."
+      },
+      {
+        name: "Meia Praia (sporty wodne)",
+        lat: 37.1106944, lng: -8.659675, cat: "adventure",
+        desc: "4-kilometrowy, wietrzny łuk piasku — świetny na kitesurf, żagle i gry zespołowe na plaży.",
+        links: [
+          {label:"Koordy", url:"https://euroveloportugal.com/en/poi/meia-praia-2"},
+          {label:"Więcej o plaży", url:"https://en.wikipedia.org/wiki/Meia_Praia"}
+        ],
+        why: "Ogrom przestrzeni = luz dla 8 osób, łatwo zorganizować aktywności i wypożyczenia."
+      },
+      {
+        name: "Praia do Porto de Mós (surf)",
+        lat: 37.085000, lng: -8.687778, cat: "adventure",
+        desc: "Szeroka plaża na zachód od centrum, ekspozycja na fale — popularna dla surfujących.",
+        links: [
+          {label:"Opis/położenie", url:"https://www.beachrex.com/en/portugal/faro/lagos-beaches/praia-do-porto-de-mos"}
+        ],
+        why: "Opcja „aktywnie”: lekcje surfingu dla całej grupy lub free-surf przy sprzyjającej fali."
+      },
+      {
+        name: "Marina de Lagos — brama „Passeios de Barco” (rejsy/delfiny/groty)",
+        lat: 37.108619, lng: -8.673139, cat: "adventure",
+        desc: "Główny punkt zbiórki na rejsy do grot Ponta da Piedade oraz wyprawy na delfiny.",
+        links: [
+          {label:"Punkt zbiórki + GPS", url:"https://theabroadguide.com/from-lagos-2-5-hour-guided-coastal-boat-tour-grotto-visit/"},
+          {label:"Operator (przykład)", url:"https://bluefleet.pt/en/lagos-portugal-tourist-information/"}
+        ],
+        why: "Łatwe zebranie 8 osób, szybka logistyka, rejsy to „pewniak” przygody."
+      },
+      {
+        name: "Forte da Ponta da Bandeira (XVII w.)",
+        lat: 37.099050, lng: -8.668270, cat: "culture",
+        desc: "Fort u wejścia do portu — widoki na ujście i Batatę; mały „muzealny” przystanek.",
+        links: [
+          {label:"Opis + koordy", url:"https://en.wikipedia.org/wiki/Fort_of_Ponta_da_Bandeira"},
+          {label:"Oficjalny opis", url:"https://www.visitportugal.com/en/node/136430"}
+        ],
+        why: "Szybki wtręt historyczny między wodnymi atrakcjami; fajny punkt foto."
+      },
+      {
+        name: "Parque Aventura Lagos (park linowy + paintball)",
+        lat: 37.1166859, lng: -8.6575933, cat: "adventure",
+        desc: "Zestaw tras w koronach drzew i paintball — adrenalina na lądzie w pobliżu Meia Praia.",
+        links: [
+          {label:"Strona", url:"https://parqueaventura.net/lagos/"},
+          {label:"Położenie/koory", url:"https://mytripalgarve.com/place/parque-aventura-lagos/"}
+        ],
+        why: "Świetne „team-bonding”, konkurencje na czas i tryb gry zespołowej dla 8 osób."
+      },
+      {
+        name: "Lagos Divers (centrum nurkowe)",
+        lat: 37.10646, lng: -8.67502, cat: "adventure",
+        desc: "Centrum nurkowe przy Rua Vítor Costa e Silva — kursy i nurkowania w okolicy Lagos.",
+        links: [
+          {label:"Info/kontakt", url:"https://www.zentacle.com/Shop.aspx?CountryId=196&StateId=185&CityId=1872&OrganizationId=16594"},
+          {label:"Ulica/położenie", url:"https://mapcarta.com/W800176049"}
+        ],
+        why: "Dla ekip spragnionych „głębszych” wrażeń — możliwość zrobienia wspólnego intro-dive."
+      },
+      {
+        name: "Rua 25 de Abril (bar-street / pub crawl)",
+        lat: 37.10181, lng: -8.67214, cat: "nightlife",
+        desc: "Główna ulica nocnego życia Lagos — rząd barów/klubów, muzyka na żywo, drinki.",
+        links: [
+          {label:"Przewodnik nocny", url:"https://www.hotels.com/go/portugal/best-nightlife-lagos"},
+          {label:"Przykładowy bar", url:"https://www.bonvivantbarinlagos.com/"}
+        ],
+        why: "Po całym dniu aktywności — idealna trasa na bar-hopping dla większej ekipy."
+      },
+      {
+        name: "Praia do Pinhão (mała „instagramowa” zatoczka)",
+        lat: 37.094419, lng: -8.668249, cat: "beach",
+        desc: "Niewielka dzika plaża ze schodkami i widokowym klifem — blisko Dona Ana.",
+        links: [
+          {label:"Koordy + mapa", url:"https://www.playocean.net/en/portugal/lagos/beaches/praia-do-pinhao-beach"},
+          {label:"Alternatywne źródło", url:"https://euroveloportugal.com/en/poi/praia-do-pinhao-2"}
+        ],
+        why: "Szybki wypad na zdjęcia/odpoczynek między bardziej intensywnymi aktywnościami."
+      }
+    ];
+
+    // Dodaj markery
+    const bounds = [];
+    spots.forEach(s => {
+      const popupHtml = `
+        <div class="popup">
+          <h3>${s.name} <span class="tag">${({beach:"Plaża", adventure:"Woda & adrenalina", culture:"Zwiedzanie", nightlife:"Nocne życie"})[s.cat]}</span></h3>
+          <p>${s.desc}</p>
+          <p><strong>Dlaczego na mapie:</strong> ${s.why}</p>
+          <p>${s.links.map(l => `• <a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join("<br/>")}</p>
+          <p style="font-size:12px;color:#6b7280;margin-top:6px">GPS: ${s.lat.toFixed(6)}, ${s.lng.toFixed(6)}</p>
+        </div>
+      `;
+      const marker = L.marker([s.lat, s.lng]).bindPopup(popupHtml);
+      groups[s.cat].addLayer(marker);
+      bounds.push([s.lat, s.lng]);
+    });
+
+    // Fit do wszystkich punktów
+    if (bounds.length) {
+      map.fitBounds(bounds, { padding: [20, 20] });
+    }
+
+    // Prosty filtr warstw
+    document.querySelectorAll('#legend input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', e => {
+        const layerKey = e.target.getAttribute('data-layer');
+        if (e.target.checked) {
+          groups[layerKey].addTo(map);
+        } else {
+          map.removeLayer(groups[layerKey]);
+        }
+      });
+    });
+
+    // Skala
+    L.control.scale({imperial:false}).addTo(map);
+  </script>
+</body>
+</html>
