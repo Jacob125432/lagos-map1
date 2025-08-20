@@ -62,126 +62,247 @@
     };
 
     // Dane punktów (nazwa, opis, linki, "dlaczego", kategoria i współrzędne)
-    const spots = [
-      {
-        name: "Ponta da Piedade (klifowy labirynt + latarnia)",
-        lat: 37.08062, lng: -8.66942, cat: "adventure",
-        desc: "Najsłynniejsze klify Algarve: łuki skalne, groty, punkty widokowe i drewniane kładki.",
-        links: [
-          {label:"Info (przewodnik)", url:"https://www.lagosportugalguide.com/lagos-algarve/ponta-da-piedade-lagos.html"},
-          {label:"Mapa", url:"https://mapcarta.com/W55432710"}
-        ],
-        why: "Mocny efekt WOW + trasy piesze i świetny punkt startowy do kajaków/łodzi."
-      },
-      {
-        name: "Praia do Camilo",
-        lat: 37.08733, lng: -8.66843, cat: "beach",
-        desc: "Ikoniczna plaża ze stromymi schodami, turkusową wodą i fotogenicznymi formacjami.",
-        links: [
-          {label:"Opis (blog)", url:"https://www.zigzagonearth.com/praia-camilo-beach-lagos-portugal/"},
-          {label:"Mapa/koordy", url:"https://mapcarta.com/33030320"}
-        ],
-        why: "Świetne zdjęcia, zejście „na nogach pali”, klimat przygody w miejskim zasięgu."
-      },
-      {
-        name: "Praia de Dona Ana",
-        lat: 37.091427, lng: -8.669362, cat: "beach",
-        desc: "Duża, osłonięta plaża między Pinhão i Camilo — złote klify i łatwy dostęp.",
-        links: [
-          {label:"Info + GPS", url:"https://www.lagosportugalguide.com/lagos-algarve/Praia-Dona-Ana-lagos.html"}
-        ],
-        why: "Bezpieczna baza wypadowa dla większej grupy; w sezonie dostępne wypożyczenia."
-      },
-      {
-        name: "Praia da Batata (start kajaków/SUP)",
-        lat: 37.0977806, lng: -8.6684444, cat: "adventure",
-        desc: "Plaża u ujścia rzeki Bensafrim — częsty punkt startu wycieczek kajakowych do grot.",
-        links: [
-          {label:"Info (turystyczne)", url:"https://www.lagosportugalguide.com/lagos-algarve/Praia-da-Batata-lagos.html"},
-          {label:"Oficjalnie (koory)", url:"https://visitalgarve.pt/en/equipamento/8725/praia-da-batata"}
-        ],
-        why: "Idealna, by całą ekipą wsiąść w kajaki/SUP i „przepłynąć” klify pod Piedade."
-      },
-      {
-        name: "Meia Praia (sporty wodne)",
-        lat: 37.1106944, lng: -8.659675, cat: "adventure",
-        desc: "4-kilometrowy, wietrzny łuk piasku — świetny na kitesurf, żagle i gry zespołowe na plaży.",
-        links: [
-          {label:"Koordy", url:"https://euroveloportugal.com/en/poi/meia-praia-2"},
-          {label:"Więcej o plaży", url:"https://en.wikipedia.org/wiki/Meia_Praia"}
-        ],
-        why: "Ogrom przestrzeni = luz dla 8 osób, łatwo zorganizować aktywności i wypożyczenia."
-      },
-      {
-        name: "Praia do Porto de Mós (surf)",
-        lat: 37.085000, lng: -8.687778, cat: "adventure",
-        desc: "Szeroka plaża na zachód od centrum, ekspozycja na fale — popularna dla surfujących.",
-        links: [
-          {label:"Opis/położenie", url:"https://www.beachrex.com/en/portugal/faro/lagos-beaches/praia-do-porto-de-mos"}
-        ],
-        why: "Opcja „aktywnie”: lekcje surfingu dla całej grupy lub free-surf przy sprzyjającej fali."
-      },
-      {
-        name: "Marina de Lagos — brama „Passeios de Barco” (rejsy/delfiny/groty)",
-        lat: 37.108619, lng: -8.673139, cat: "adventure",
-        desc: "Główny punkt zbiórki na rejsy do grot Ponta da Piedade oraz wyprawy na delfiny.",
-        links: [
-          {label:"Punkt zbiórki + GPS", url:"https://theabroadguide.com/from-lagos-2-5-hour-guided-coastal-boat-tour-grotto-visit/"},
-          {label:"Operator (przykład)", url:"https://bluefleet.pt/en/lagos-portugal-tourist-information/"}
-        ],
-        why: "Łatwe zebranie 8 osób, szybka logistyka, rejsy to „pewniak” przygody."
-      },
-      {
-        name: "Forte da Ponta da Bandeira (XVII w.)",
-        lat: 37.099050, lng: -8.668270, cat: "culture",
-        desc: "Fort u wejścia do portu — widoki na ujście i Batatę; mały „muzealny” przystanek.",
-        links: [
-          {label:"Opis + koordy", url:"https://en.wikipedia.org/wiki/Fort_of_Ponta_da_Bandeira"},
-          {label:"Oficjalny opis", url:"https://www.visitportugal.com/en/node/136430"}
-        ],
-        why: "Szybki wtręt historyczny między wodnymi atrakcjami; fajny punkt foto."
-      },
-      {
-        name: "Parque Aventura Lagos (park linowy + paintball)",
-        lat: 37.1166859, lng: -8.6575933, cat: "adventure",
-        desc: "Zestaw tras w koronach drzew i paintball — adrenalina na lądzie w pobliżu Meia Praia.",
-        links: [
-          {label:"Strona", url:"https://parqueaventura.net/lagos/"},
-          {label:"Położenie/koory", url:"https://mytripalgarve.com/place/parque-aventura-lagos/"}
-        ],
-        why: "Świetne „team-bonding”, konkurencje na czas i tryb gry zespołowej dla 8 osób."
-      },
-      {
-        name: "Lagos Divers (centrum nurkowe)",
-        lat: 37.10646, lng: -8.67502, cat: "adventure",
-        desc: "Centrum nurkowe przy Rua Vítor Costa e Silva — kursy i nurkowania w okolicy Lagos.",
-        links: [
-          {label:"Info/kontakt", url:"https://www.zentacle.com/Shop.aspx?CountryId=196&StateId=185&CityId=1872&OrganizationId=16594"},
-          {label:"Ulica/położenie", url:"https://mapcarta.com/W800176049"}
-        ],
-        why: "Dla ekip spragnionych „głębszych” wrażeń — możliwość zrobienia wspólnego intro-dive."
-      },
-      {
-        name: "Rua 25 de Abril (bar-street / pub crawl)",
-        lat: 37.10181, lng: -8.67214, cat: "nightlife",
-        desc: "Główna ulica nocnego życia Lagos — rząd barów/klubów, muzyka na żywo, drinki.",
-        links: [
-          {label:"Przewodnik nocny", url:"https://www.hotels.com/go/portugal/best-nightlife-lagos"},
-          {label:"Przykładowy bar", url:"https://www.bonvivantbarinlagos.com/"}
-        ],
-        why: "Po całym dniu aktywności — idealna trasa na bar-hopping dla większej ekipy."
-      },
-      {
-        name: "Praia do Pinhão (mała „instagramowa” zatoczka)",
-        lat: 37.094419, lng: -8.668249, cat: "beach",
-        desc: "Niewielka dzika plaża ze schodkami i widokowym klifem — blisko Dona Ana.",
-        links: [
-          {label:"Koordy + mapa", url:"https://www.playocean.net/en/portugal/lagos/beaches/praia-do-pinhao-beach"},
-          {label:"Alternatywne źródło", url:"https://euroveloportugal.com/en/poi/praia-do-pinhao-2"}
-        ],
-        why: "Szybki wypad na zdjęcia/odpoczynek między bardziej intensywnymi aktywnościami."
-      }
-    ];
+    <!-- ZASTĄP TĄ TABLICĄ SWOJĄ OBECNĄ "const spots = [...]" -->
+<script>
+const spots = [
+  /* ===================== LAGOS (jak wcześniej) ===================== */
+  {
+    name: "Ponta da Piedade (klifowy labirynt + latarnia)",
+    lat: 37.08062, lng: -8.66942, cat: "adventure",
+    desc: "Najsłynniejsze klify Algarve: łuki skalne, groty, punkty widokowe i kładki.",
+    links: [
+      {label:"Info (przewodnik)", url:"https://www.lagosportugalguide.com/lagos-algarve/ponta-da-piedade-lagos.html"},
+      {label:"Mapa", url:"https://mapcarta.com/W55432710"}
+    ],
+    why: "Efekt WOW + trasy piesze i start kajaków/łodzi w okolicy."
+  },
+  {
+    name: "Praia do Camilo",
+    lat: 37.08733, lng: -8.66843, cat: "beach",
+    desc: "Ikoniczna plaża ze stromymi schodami i turkusową wodą.",
+    links: [
+      {label:"Opis (blog)", url:"https://www.zigzagonearth.com/praia-camilo-beach-lagos-portugal/"},
+      {label:"Koordy", url:"https://mapcarta.com/33030320"}
+    ],
+    why: "Świetne zdjęcia, zejście „pali” w nogi – klimat przygody."
+  },
+  {
+    name: "Praia de Dona Ana",
+    lat: 37.091427, lng: -8.669362, cat: "beach",
+    desc: "Duża, osłonięta plaża między Pinhão i Camilo – złote klify, łatwy dostęp.",
+    links: [{label:"Info + GPS", url:"https://www.lagosportugalguide.com/lagos-algarve/Praia-Dona-Ana-lagos.html"}],
+    why: "Bezpieczna baza wypadowa dla większej grupy."
+  },
+  {
+    name: "Praia da Batata (start kajaków/SUP)",
+    lat: 37.0977806, lng: -8.6684444, cat: "adventure",
+    desc: "Plaża u ujścia Bensafrim – częsty punkt startu kajaków do grot.",
+    links: [
+      {label:"Info", url:"https://www.lagosportugalguide.com/lagos-algarve/Praia-da-Batata-lagos.html"},
+      {label:"Koordy", url:"https://visitalgarve.pt/en/equipamento/8725/praia-da-batata"}
+    ],
+    why: "Idealna, by całą ekipą wsiąść w kajaki/SUP."
+  },
+  {
+    name: "Meia Praia (sporty wodne)",
+    lat: 37.1106944, lng: -8.659675, cat: "adventure",
+    desc: "4-km łuk piasku – kitesurf, żagle, gry zespołowe na plaży.",
+    links: [
+      {label:"Koordy", url:"https://euroveloportugal.com/en/poi/meia-praia-2"},
+      {label:"Wiki", url:"https://en.wikipedia.org/wiki/Meia_Praia"}
+    ],
+    why: "Dużo przestrzeni = luz dla 8 osób."
+  },
+  {
+    name: "Praia do Porto de Mós (surf)",
+    lat: 37.085000, lng: -8.687778, cat: "adventure",
+    desc: "Szeroka plaża na zachód od centrum, popularna dla surfujących.",
+    links: [{label:"Opis/położenie", url:"https://www.beachrex.com/en/portugal/faro/lagos-beaches/praia-do-porto-de-mos"}],
+    why: "Lekcje surfingu dla całej grupy lub free-surf."
+  },
+  {
+    name: "Marina de Lagos — rejsy/groty/delfiny",
+    lat: 37.108619, lng: -8.673139, cat: "adventure",
+    desc: "Punkt zbiórki na rejsy do grot Ponta da Piedade i wyprawy na delfiny.",
+    links: [
+      {label:"Punkt zbiórki", url:"https://www.theabroadguide.com/from-lagos-2-5-hour-guided-coastal-boat-tour-grotto-visit/"},
+      {label:"Operator", url:"https://bluefleet.pt/en/lagos-portugal-tourist-information/"}
+    ],
+    why: "Łatwa logistyka dla 8 osób, rejs to „pewniak”."
+  },
+  {
+    name: "Forte da Ponta da Bandeira (XVII w.)",
+    lat: 37.099050, lng: -8.668270, cat: "culture",
+    desc: "Fort u wejścia do portu – widoki na ujście i Batatę.",
+    links: [
+      {label:"Wiki", url:"https://en.wikipedia.org/wiki/Fort_of_Ponta_da_Bandeira"},
+      {label:"VisitPortugal", url:"https://www.visitportugal.com/en/node/136430"}
+    ],
+    why: "Szybki wtręt historyczny + foto-spot."
+  },
+  {
+    name: "Parque Aventura Lagos (liny + paintball)",
+    lat: 37.1166859, lng: -8.6575933, cat: "adventure",
+    desc: "Trasy w koronach drzew i paintball – adrenalina przy Meia Praia.",
+    links: [
+      {label:"Strona", url:"https://parqueaventura.net/lagos/"},
+      {label:"Mapa", url:"https://mytripalgarve.com/place/parque-aventura-lagos/"}
+    ],
+    why: "Team-bonding i rywalizacja dla ekipy."
+  },
+  {
+    name: "Lagos Divers (centrum nurkowe)",
+    lat: 37.10646, lng: -8.67502, cat: "adventure",
+    desc: "Kursy i nurkowania w okolicy Lagos.",
+    links: [
+      {label:"Info/kontakt", url:"https://www.zentacle.com/Shop.aspx?CountryId=196&StateId=185&CityId=1872&OrganizationId=16594"},
+      {label:"Ulica/położenie", url:"https://mapcarta.com/W800176049"}
+    ],
+    why: "Intro-dive dla „głębszych” wrażeń."
+  },
+  {
+    name: "Rua 25 de Abril (bar-street / pub crawl)",
+    lat: 37.10181, lng: -8.67214, cat: "nightlife",
+    desc: "Główna ulica nocnego życia – bary, kluby, muzyka na żywo.",
+    links: [
+      {label:"Przewodnik nocny", url:"https://www.hotels.com/go/portugal/best-nightlife-lagos"},
+      {label:"Przykładowy bar", url:"https://www.bonvivantbarinlagos.com/"}
+    ],
+    why: "Bar-hopping po intensywnym dniu."
+  },
+  {
+    name: "Praia do Pinhão (mała „instagramowa” zatoczka)",
+    lat: 37.094419, lng: -8.668249, cat: "beach",
+    desc: "Dzika plaża ze schodkami i widokowym klifem – blisko Dona Ana.",
+    links: [
+      {label:"Koordy + mapa", url:"https://www.playocean.net/en/portugal/lagos/beaches/praia-do-pinhao-beach"},
+      {label:"Alternatywa", url:"https://euroveloportugal.com/en/poi/praia-do-pinhao-2"}
+    ],
+    why: "Szybki wypad na foto/chill."
+  },
+
+  /* ===================== LIZBONA ===================== */
+  {
+    name: "Bairro Alto (dzielnica barów)",
+    lat: 38.712753, lng: -9.146295, cat: "nightlife",
+    desc: "Klubowo-barowe centrum nocnej Lizbony; puby, fado, rooftop-y.",
+    links: [{label:"Opis/koordy", url:"https://www.latlong.net/place/bairro-alto-lisbon-portugal-25126.html"}],
+    why: "Świetny start na wieczór dla 8-os. ekipy."
+  },
+  {
+    name: "Pink Street (Rua Nova do Carvalho)",
+    lat: 38.7072892, lng: -9.1438142, cat: "nightlife",
+    desc: "Słynna „różowa ulica” w Cais do Sodré – kluby, bary, zdjęcia.",
+    links: [{label:"Przewodnik", url:"https://www.lisbonportugaltourism.com/pl/lizbona/atrakcje/pink-street.html"}],
+    why: "Kompaktowa strefa klubów – łatwo trzymać grupę razem."
+  },
+  {
+    name: "Time Out Market (Mercado da Ribeira)",
+    lat: 38.70709, lng: -9.1459, cat: "nightlife",
+    desc: "Ogromna hala gastro: najlepsze stoiska i bary w mieście.",
+    links: [{label:"Strona", url:"https://www.timeoutmarket.com/lisboa/en/"}],
+    why: "Wygodne „karmienie” dużej ekipy – każdy coś znajdzie."
+  },
+  {
+    name: "LX Factory",
+    lat: 38.703511, lng: -9.17882, cat: "nightlife",
+    desc: "Postindustrialny kompleks: bary, street-food, koncerty, galerie.",
+    links: [{label:"Strona", url:"https://lxfactory.com/en/"}],
+    why: "Klimat + dużo przestrzeni dla grupy."
+  },
+  {
+    name: "Rejs/sunset na Tagu – Doca de Santo Amaro (Gate 3)",
+    lat: 38.69968, lng: -9.17605, cat: "adventure",
+    desc: "Miejsce zbiórki na rejsy pod mostem 25 de Abril.",
+    links: [{label:"Meeting point", url:"https://www.lisbonbyboat.com/meeting-point"}],
+    why: "Wspólna łódź = integracja + widoki."
+  },
+  {
+    name: "Pilar 7 – 25 de Abril Bridge Experience",
+    lat: 38.699909, lng: -9.179541, cat: "adventure",
+    desc: "Szklana platforma na filarze mostu 25 de Abril – hardcore’owy widok.",
+    links: [{label:"Strona", url:"https://www.experienciapilar7.pt/en"}],
+    why: "Dreszczyk i świetne foty."
+  },
+  {
+    name: "Torre de Belém",
+    lat: 38.691586, lng: -9.215977, cat: "culture",
+    desc: "Ikoniczna wieża u ujścia Tagu; symbol epoki odkryć.",
+    links: [{label:"Koordy", url:"https://www.latlong.net/place/the-belem-tower-lisbon-portugal-23126.html"}],
+    why: "Obowiązkowy „must-see” blisko innych atrakcji Belém."
+  },
+  {
+    name: "Castelo de São Jorge",
+    lat: 38.713909, lng: -9.133476, cat: "culture",
+    desc: "Średniowieczny zamek z panoramą na Alfamę i Tag.",
+    links: [{label:"Koordy", url:"https://www.latlong.net/place/s-o-jorge-castle-lisbon-portugal-23127.html"}],
+    why: "Historia + widoki – dobry dzienny kontrast do nocy."
+  },
+  {
+    name: "Miradouro da Senhora do Monte",
+    lat: 38.719186, lng: -9.132839, cat: "culture",
+    desc: "Jeden z najwyższych punktów widokowych na Lizbonę.",
+    links: [{label:"Koordy", url:"https://elevation.maplogs.com/poi/nossa_senhora_do_monte_belvedere_largo_monte_lisboa_portugal.321312.html"}],
+    why: "Szybka, bezpłatna „wow-miejscówka”."
+  },
+  {
+    name: "Costa da Caparica – Praia do CDS (surf)",
+    lat: 38.645149, lng: -9.241793, cat: "adventure",
+    desc: "Szeroka plaża surfowa na południe od mostu; szkoły surfingu.",
+    links: [{label:"Blue Flag", url:"https://www.blueflag.global/awarded-sites/cds"}],
+    why: "Łatwy dojazd + fale dla różnych poziomów."
+  },
+
+  /* ===================== ALJEZUR ===================== */
+  {
+    name: "Praia da Arrifana",
+    lat: 37.29206, lng: -8.86546, cat: "beach",
+    desc: "Słynna zatoka z klifami i „igłą” Pedra da Agulha; świetny surf.",
+    links: [{label:"Mapa", url:"https://mapcarta.com/16888602"}],
+    why: "Stabilny wybór na fale + dramatyczne klify."
+  },
+  {
+    name: "Praia de Monte Clérigo",
+    lat: 37.3403611, lng: -8.8540361, cat: "beach",
+    desc: "Długa, dzika plaża z knajpkami; dobre warunki do surfingu.",
+    links: [{label:"Wiki", url:"https://en.wikipedia.org/wiki/Praia_de_Monte_Cl%C3%A9rigo"}],
+    why: "Mniej tłumów niż Arrifana; łatwo ogarnąć większą ekipę."
+  },
+  {
+    name: "Praia da Amoreira (ujście rzeki)",
+    lat: 37.35139, lng: -8.84444, cat: "beach",
+    desc: "Plaża + laguna rzeki – pływanie, SUP, chill.",
+    links: [{label:"Wiki", url:"https://en.wikipedia.org/wiki/Praia_da_Amoreira"}],
+    why: "Świetna alternatywa przy wietrze/bałwanie."
+  },
+  {
+    name: "Castelo de Aljezur",
+    lat: 37.316442, lng: -8.805352, cat: "culture",
+    desc: "Ruiny zamku na wzgórzu z panoramą doliny.",
+    links: [{label:"Info/koordy", url:"https://euroveloportugal.com/en/poi/castelo-de-aljezur-aljezur-castle"}],
+    why: "Krótki „hike” + historia."
+  },
+  {
+    name: "Ribat da Arrifana / Ponta da Atalaia",
+    lat: 37.32098, lng: -8.87717, cat: "culture",
+    desc: "Ruiny średniowiecznego ribatu na cyplu; epickie klify i zachody.",
+    links: [{label:"Mapa", url:"https://mapcarta.com/N367674624"}],
+    why: "Krótki trekking, zero tłumów, widoki „koniec świata”."
+  },
+  {
+    name: "Praia de Odeceixe",
+    lat: 37.440833, lng: -8.798333, cat: "beach",
+    desc: "Unikalna plaża u ujścia Rio de Seixe; rzeka + ocean w jednym.",
+    links: [{label:"Opis/zdjęcia", url:"https://www.beachrex.com/en/portugal/algarve/odeceixe-beaches/praia-de-odeceixe-mar"}],
+    why: "Plażowanie w rzece (cieplej) i w oceanie – idealne dla grupy."
+  },
+  {
+    name: "Praia do Canal",
+    lat: 37.2702194, lng: -8.8601778, cat: "beach",
+    desc: "Dzika, kamienista zatoka tuż na południe od Arrifany.",
+    links: [{label:"Info", url:"https://euroveloportugal.com/en/poi/canal-beach"}],
+    why: "Ucieczka od tłumów;
+
 
     // Dodaj markery
     const bounds = [];
